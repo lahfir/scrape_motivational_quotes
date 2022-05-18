@@ -2,15 +2,13 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
 
-driver = webdriver.Chrome(
-    "C://chromedriver_win32//chromedriver.exe"
-)  # PATh TO CHROME DRIVER
+driver = webdriver.Chrome("C://chromedriver.exe")  # PATh TO CHROME DRIVER
 
 driver.get("https://www.oberlo.in/blog/motivational-quotes")
 time.sleep(5)
 
 
-html_list = driver.find_element_by_xpath('//*[@id="article-content"]/div[1]')
+html_list = driver.find_element_by_xpath('//*[@id="article-content"]/div[2]')
 items = html_list.find_elements_by_tag_name("ol")
 amount_ol = 0
 for item in items:
@@ -19,7 +17,7 @@ print(amount_ol)
 k = 1
 for i in range(1, amount_ol):
     ol = driver.find_element_by_xpath(
-        '//*[@id="article-content"]/div[1]/ol[' + str(i) + "]"
+        '//*[@id="article-content"]/div[2]/ol[' + str(i) + "]"
     )
     items = ol.find_elements_by_tag_name("li")
     amount_li = 0
@@ -27,7 +25,7 @@ for i in range(1, amount_ol):
         amount_li += 1
     for j in range(1, amount_li, 1):
         text = driver.find_element_by_xpath(
-            '//*[@id="article-content"]/div[1]/ol['
+            '//*[@id="article-content"]/div[2]/ol['
             + str(i)
             + "]/li["
             + str(j)
@@ -35,10 +33,10 @@ for i in range(1, amount_ol):
         ).text
         text.encode("utf-8")
         with open(
-            "D:/ContentC/VideoContents for D4B/TXT/" + str(k) + ".txt",
-            "w",
+            "Extracted.txt",
+            "a+",
             encoding="utf-8",
         ) as file:
-            file.write(text)
+            file.write(text + "\n")
         file.close()
         k += 1
